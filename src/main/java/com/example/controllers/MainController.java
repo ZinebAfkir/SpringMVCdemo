@@ -48,6 +48,7 @@ public class MainController { //El MainController responde a todas las peticione
      public String formularioAltaEstudiante(Model model){
 
         model.addAttribute("estudiante", new Estudiante());
+        
         return "views/formularioAltaEstudiante";
      }
 }
