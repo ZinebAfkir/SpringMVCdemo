@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Formulario de alta de estudiante</h1>
+
+
+    <form th:Object="${estudiante}" action="">
+        <labe for = "nombre">Nombre: </label>
+        <input type="text" name="nombre" id="nombre" th:field="*{nombre}">
+    </form>
+
+
+    <!-- ¿Como funciona un formulario HTML en general? -->
+    <!-- //para pedir informacion, eso lo hacemos dentro del form -->
+
+    <!-- Comentar todo lo siquiente hasta el form -->
+    <form action="/altaEstudiante" method="get">  <!--   la url que va a responder, para una url no puede recibir un metodo de tipo post-->
+      <input name="nombre" placeholder="Escriba su nombre, porfa!" type="text"> <!--  el nombre es de tipo texto y la fecha es de tipo date-->
+     
+      <label for="fechaNacimiento"> Fecha de Nacimiento: </label>
+      <input name="fechaNacimiento" type="date" id="fechaNacimiento"> 
+
+       <input type="submit" value="Enviar">    <!-- // para clikear el boton  llamado submit y para campiar la caption o nombre del boton lo hacemos via value dnd le decimos que se llame Enviar en vez de submit-->
+    
+    </form> 
+</body>
+</html>

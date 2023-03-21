@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Listado de Estudiantes</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <!--  son 9 th porq la tabla de estudiantes tiene 9 campos  y entre th y otro ponemos el nombre que queramos no tiene que ser igual que las tablas de mysql-->
+                <th>Nombre</th>
+                <th>Primer Apellido</th>
+                <th>Segundo Apellido</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Fecha de Alta</th>
+                <th>Beca</th>
+                <th>Genero</th>
+                <th>ID Facultad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- // por cada estudiante que haya necesito una fila por la tabla, para cada fila es la tr -->
+            <!-- quiero recorrer la lista de estudiantes que me ha mandado el controlador(usando un for mejorado que en caso del estudio code es th:each) y por cada estudiante le saco su id y su resto de campos-->
+
+            
+
+
+            <tr th:each=" estudiante : ${estudiantes}">
+                <td th:text="${estudiante.id}"></td>
+                <!--  // el id es como le hemos llamado en la entities de la clase Estudiante -->
+                <td th:text="${estudiante.nombre}"></td>
+                <td th:text="${estudiante.primerApellido}"></td>
+                <td th:text="${estudiante.segundoApellido}"></td>
+                <td th:text="${estudiante.fechaAlta}"></td>
+                <td th:text="${estudiante.fechaNacimiento}"></td>
+                <td th:text="${estudiante.genero}"></td>
+                <td th:text="${estudiante.beca}"></td>
+                <td th:text="${estudiante.facultad.nombre}"></td>
+                <!-- para que en la tabla de estudiante salga el nombre de la facultad y no todos sus campos del objeto facultad 
+    porq si yo pongo.facultad me va a aparecer todos los campos de la clase Facultad ya que mi objeto es Facultad facultad pero 
+    como le he pasado ahora facultad.nombre pues solo aparecera el nombre de la facultad a cual pertenece el estudiante, 
+    y no ponemos el id de facultad a cual pertenece el estudiante porq un estudiante solo puede pertenecer a una sola facultad  -->
+
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
