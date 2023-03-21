@@ -7,27 +7,114 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Formulario de alta de estudiante</h1>
+    <h1>Formulario de Alta de Estudiante</h1>
 
 
-    <form th:Object="${estudiante}" action="">
-        <labe for = "nombre">Nombre: </label>
-        <input type="text" name="nombre" id="nombre" th:field="*{nombre}">
+    <form th:Object="${estudiante}">
+
+        <label for = "nombre">Nombre: </label>
+        <!-- QUIERO QUE EN LA PAGINA SOLO SE PUEDA ENVIAR CUANDO HAYA RELLENANDO LOS CAMPOS QUE YO QUIERO ES DECIR QUE ALGUNOS CAMPOS NO PUEDEN ESTAR VACIOS O NULL PARA ELLO AÑADIMOS EL REQUIERED EN LA LINEA INPUT DE DICHOS CAMPO -->
+        <input type="text" name="nombre" id="nombre" th:field="*{nombre}" required> 
+        <!-- el nombre del campo que esta dentro de th:field se tiene que llamar igual que en la clase  -->
+
+        <label for = "primerApellido">Primer Apellido: </label>
+        <input type="text" name="primerApellido" id="primerApellido" th:field="*{primerApellido}" required> 
+
+        <label for = "segundoApellido">Segundo Apellido: </label>
+        <input type="text" name="segundoApellido" id="segundoApellido" th:field="*{segundoApellido}" required> 
+   
+        <label for = "fechaAlta">Fecha de Alta: </label>
+        <input type="date" name="fechaAlta" id="fechaAlta" th:field="*{fechaAlta}" required> 
+
+        <label for = "fechaNacimiento">Fecha de Nacimiento: </label>
+        <input type="date" name="fechaNacimiento" id="fechaNacimiento" th:field="*{fechaNacimiento}"> 
+    
+        <fieldset>
+
+             
+            <!-- el genero es un enumerable -->
+            <legend>Genero</legend>
+            <label for="hombre">Hombre</label>
+            <!-- HOMBRE asi se llama dentro de las {} del enum -->
+            <input type="radio" id="hombre" name="genero" value="HOMBRE" th:field="*{genero}" required> 
+
+            <label for="mujer">Mujer</label>
+            <input type="radio" id="mujer" name="genero" value="MUJER" th:field="*{genero}" required>
+
+            <label for="otro">Otro</label>
+            <input type="radio" id="otro" name="genero" value="OTRO" th:field="*{genero}" required>
+
+            <!-- Los radio botones han de ser mutuamente excluyentes es decir si selecciono uno no puedo seleccionar otro
+            por eso añadimos name="genero", esto le indica q hacen referencia al mismo genero 
+            y cuando le metamos datos solo meta un valor -->
+        </fieldset>
+    
+        <label for="beca">Beca recibida:</label>
+        <!-- el campo beca en la clase Estudiante es de tipo double entonces el th:field entiende que es de tipo double aunque el tipo sea text -->
+        <input type="text" name="beca" id="beca" th:field="*{beca}">  
+
+
+        <label for="idFacultad">Facultad: </label>
+        <select name="facultad" id="idFacultad" required>
+          <option></option>
+          <option th:each="facultad : ${facultades}" th:value="${facultad.id}"
+                  th:th:text="${facultad.nombre}"></option>
+
+          <!-- al recorrer la lista de faculates ya no puedo usar las 2 siguientes lineas  -->
+          <!-- <option value="1">Informatica</option>
+          <option value="2">Biologia</option> -->
+        </select>
+    
+
+        <!--Para clikear el boton llamado submit y para campiar la caption o nombre del boton lo hacemos via value dnd le decimos que se llame Enviar en vez de submit-->
+        <input type="submit" value="Enviar">    
     </form>
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     <!-- ¿Como funciona un formulario HTML en general? -->
     <!-- //para pedir informacion, eso lo hacemos dentro del form -->
 
-    <!-- Comentar todo lo siquiente hasta el form -->
-    <form action="/altaEstudiante" method="get">  <!--   la url que va a responder, para una url no puede recibir un metodo de tipo post-->
-      <input name="nombre" placeholder="Escriba su nombre, porfa!" type="text"> <!--  el nombre es de tipo texto y la fecha es de tipo date-->
-     
-      <label for="fechaNacimiento"> Fecha de Nacimiento: </label>
-      <input name="fechaNacimiento" type="date" id="fechaNacimiento"> 
 
-       <input type="submit" value="Enviar">    <!-- // para clikear el boton  llamado submit y para campiar la caption o nombre del boton lo hacemos via value dnd le decimos que se llame Enviar en vez de submit-->
+    <!--   la url que va a responder, para una url no puede recibir un metodo de tipo post-->
+    <!-- <form action="/altaEstudiante" method="get">   -->
+
+        <!--  el nombre es de tipo texto y la fecha es de tipo date-->
+      <!-- <input name="nombre" placeholder="Escriba su nombre, porfa!" type="text">  -->
+     
+      <!-- <label for="fechaNacimiento"> Fecha de Nacimiento: </label>
+      <input name="fechaNacimiento" type="date" id="fechaNacimiento">  -->
+
+       <!-- // para clikear el boton  llamado submit y para campiar la caption o nombre del boton lo hacemos via value dnd le decimos que se llame Enviar en vez de submit-->
+       <!-- <input type="submit" value="Enviar">    -->
     
-    </form> 
+    <!-- </form>  -->
 </body>
 </html>
