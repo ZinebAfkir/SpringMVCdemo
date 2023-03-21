@@ -16,7 +16,7 @@ import com.example.services.EstudianteService;
 //En la capa de controller  no hace falta un request y un response esto se resume en lo siguiente
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/") // va a mandar todo lo que este delante de la barra en la url
 public class MainController { //El MainController responde a todas las peticiones que estan despues del localhost 8080
     
     @Autowired
@@ -34,7 +34,7 @@ public class MainController { //El MainController responde a todas las peticione
         List<Estudiante> estudiantes = estudianteService.findAll();// el metodo findAll devuelve una lista de estuiantes 
         
         ModelAndView mav = new ModelAndView("views/listaEstudiantes");//creo un objeto de tipo ModelAndView
-        //siendo listaEstudiantes el nombre de la clase .html
+        //siendo listaEstudiantes el nombre de la clase .html dnd el nombre de la view o vista es listaE...
         
         mav.addObject("estudiantes",estudiantes);
         return mav; 
