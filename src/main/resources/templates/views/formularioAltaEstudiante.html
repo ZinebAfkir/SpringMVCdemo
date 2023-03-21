@@ -53,17 +53,51 @@
         <!-- el campo beca en la clase Estudiante es de tipo double entonces el th:field entiende que es de tipo double aunque el tipo sea text -->
         <input type="text" name="beca" id="beca" th:field="*{beca}">  
 
+
         <label for="idFacultad">Facultad: </label>
         <select name="facultad" id="idFacultad" required>
           <option></option>
-          <option value="1">Informatica</option>
-          <option value="2">Biologia</option>
+          <option th:each="facultad : ${facultades}" th:value="${facultad.id}"
+                  th:th:text="${facultad.nombre}"></option>
+
+          <!-- al recorrer la lista de faculates ya no puedo usar las 2 siguientes lineas  -->
+          <!-- <option value="1">Informatica</option>
+          <option value="2">Biologia</option> -->
         </select>
     
+
         <!--Para clikear el boton llamado submit y para campiar la caption o nombre del boton lo hacemos via value dnd le decimos que se llame Enviar en vez de submit-->
         <input type="submit" value="Enviar">    
     </form>
    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- ¿Como funciona un formulario HTML en general? -->
     <!-- //para pedir informacion, eso lo hacemos dentro del form -->
