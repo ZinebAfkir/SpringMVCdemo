@@ -10,7 +10,7 @@
     <h1>Formulario de Alta de Estudiante</h1>
 
 
-    <form th:Object="${estudiante}">
+    <form th:Object="${estudiante}" th:action="@{/altaEstudiante}" method="post">  <!--@ es lo que va a recibir la url --> 
 
         <label for = "nombre">Nombre: </label>
         <!-- QUIERO QUE EN LA PAGINA SOLO SE PUEDA ENVIAR CUANDO HAYA RELLENANDO LOS CAMPOS QUE YO QUIERO ES DECIR QUE ALGUNOS CAMPOS NO PUEDEN ESTAR VACIOS O NULL PARA ELLO AÑADIMOS EL REQUIERED EN LA LINEA INPUT DE DICHOS CAMPO -->
@@ -64,8 +64,15 @@
           <!-- <option value="1">Informatica</option>
           <option value="2">Biologia</option> -->
         </select>
-    
+     
+        <label for="numerosTelefonos">Telefono(s): </label>
 
+        <!-- a continuacion no le vamos a  llamar telefono ya que cuando quiera intentar guardar o sacra los telefonos 
+        me va a decir que no porq entonces es convertir un string en una lista de telefonos porq en la clase Estudiante
+        tenemos una lista de Telefono llamada telefonos  -->
+        <input type="text" name="numerosTelefonos" id="numerosTelefonos" placeholder="Uno o varios, separados por punto y coma"> 
+        
+        <!-- Lo siguiente es para envira el formulario  -->
         <!--Para clikear el boton llamado submit y para campiar la caption o nombre del boton lo hacemos via value dnd le decimos que se llame Enviar en vez de submit-->
         <input type="submit" value="Enviar">    
     </form>
