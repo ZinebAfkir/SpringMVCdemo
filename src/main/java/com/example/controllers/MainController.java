@@ -3,12 +3,14 @@ package com.example.controllers;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -75,6 +77,7 @@ public class MainController { //El MainController responde a todas las peticione
 // de una en una como option value en formularioEstudinate.html
 
      List<Facultad> facultades = facultadService.findAll();
+     Estudiante estudiante = new Estudiante();
 
         model.addAttribute("estudiante", new Estudiante());
         model.addAttribute("facultades", facultades);
@@ -91,7 +94,7 @@ public class MainController { //El MainController responde a todas las peticione
          *
          */
 
-         @PostMapping("/altaEstudiante") //post es para que lo que envie este dentro del protocolo es decir no lo puede ver todo el mundo
+         @PostMapping("/altaModificacionEstudiante") //post es para que lo que envie este dentro del protocolo es decir no lo puede ver todo el mundo
         public String altaEstudiante(@ModelAttribute Estudiante estudiante,
                       @RequestParam(name ="numerosTelefonos") String telefonosRecibidos){
 
@@ -139,4 +142,42 @@ public class MainController { //El MainController responde a todas las peticione
            
         }
      
-}
+
+
+/*
+ * Metodo para actualizar los datos de un estudiante dado su id
+ */
+
+ //como se hace a través de un link, es un get y es visible para todos, solo es post si se lo especificamos nosotros a la hora 
+ //de hacer un formulario
+
+       @GetMapping("/fmrActualizar/{id}")
+       public String frmactualizaEstudiante(@PathVariable(name ="id") int idEstudiante, // este metodo le paso el id de un estudiante
+                                         Model model){ 
+
+        Estudiante estudiante= estudianteService.findById(idEstudiante);
+        
+        List<Telefono> todosTelefonos = telefonoService.findAll(); // findAll devuelve una lista de todos telefonos 
+        
+        // ahora todos estos telefonos los paso por un flujo y pasan por una tuberia de uno en uno y solo me quedo  
+        //con el telefono cuyo el id de estudiante coincide con el id que le pasamos al metodo actualizaEstudiante,
+        // para ello a cada telefono que pasa por la tuberia le pido el id de estudiante asociado a este telefono 
+
+        List<Telefono> telefonosDelEstudiante = todosTelefonos.stream().filter(t->t.getEstudiante().getId() == idEstudiante)
+        .collect(Collectors.toList()); 
+        
+        // pasa por la tuberia los telefonos, el estudiante  y el id del estudiante pero  solo me interesa el numero de telefono 
+
+       // el ; es para que me ajunte los telefonos del estudiante con un ; por si tiene mas de un telefono
+        String numerosDeTelefono = telefonosDelEstudiante.stream().map(t->t.getNumero()).collect(Collectors.joining(";"));
+        
+        List<Facultad> facultades =facultadService.findAll();
+
+        model.addAttribute("estudiante", estudiante);
+        model.addAttribute("telefonos", telefonosDelEstudiante);
+        model.addAttribute("facultades", facultades);
+
+        return "views/formularioAltaEstudiante";
+
+       }
+    }

@@ -10,8 +10,12 @@
     <h1>Formulario de Alta de Estudiante</h1>
 
 
-    <form th:Object="${estudiante}" th:action="@{/altaEstudiante}" method="post">  <!--@ es lo que va a recibir la url --> 
+    <form th:Object="${estudiante}" th:action="@{/altaModificacionEstudiante}" method="post">  <!--@ es lo que va a recibir la url --> 
 
+        <!-- Guaradar en un input oculto el id del estudiante , el id es para cuando queramos actualizar o borrar-->
+        <input type="hidden" name="id" th:value="${estudiante.id}">
+                      
+        
         <label for = "nombre">Nombre: </label>
         <!-- QUIERO QUE EN LA PAGINA SOLO SE PUEDA ENVIAR CUANDO HAYA RELLENANDO LOS CAMPOS QUE YO QUIERO ES DECIR QUE ALGUNOS CAMPOS NO PUEDEN ESTAR VACIOS O NULL PARA ELLO AÑADIMOS EL REQUIERED EN LA LINEA INPUT DE DICHOS CAMPO -->
         <input type="text" name="nombre" id="nombre" th:field="*{nombre}" required> 
@@ -24,10 +28,14 @@
         <input type="text" name="segundoApellido" id="segundoApellido" th:field="*{segundoApellido}" required> 
    
         <label for = "fechaAlta">Fecha de Alta: </label>
-        <input type="date" name="fechaAlta" id="fechaAlta" th:field="*{fechaAlta}" required> 
+        <input type="date" name="fechaAlta" id="fechaAlta" 
+                  th:field="*{fechaAlta}" th:value="${estudiante.fechaAlta}" required>  
+        
+        <!-- el th:value lo que hace es que me deje la fecha anterior a la hora de darle a actualizar para ver si queremos dejar esta misma fecha o modificarla -->
 
         <label for = "fechaNacimiento">Fecha de Nacimiento: </label>
-        <input type="date" name="fechaNacimiento" id="fechaNacimiento" th:field="*{fechaNacimiento}"> 
+        <input type="date" name="fechaNacimiento" id="fechaNacimiento" 
+                 th:field="*{fechaNacimiento}" th:value="${estudiante.fechaNacimiento}"> 
     
         <fieldset>
 
@@ -57,12 +65,16 @@
         <label for="idFacultad">Facultad: </label>
         <select name="facultad" id="idFacultad" required>
           <option></option>
+          <!-- el siguiente option es para cuando quiera actualizar algun estudiante que me marquen su facultad
+           en el despliegue correspondiente -->
           <option th:each="facultad : ${facultades}" th:value="${facultad.id}"
-                  th:th:text="${facultad.nombre}"></option>
+                  th:text="${facultad.nombre}" 
+                  th:selected="${estudiante.facultad != null and facultad.id == estudiante.facultad.id}">
+                </option>
+       
+                      
 
-          <!-- al recorrer la lista de faculates ya no puedo usar las 2 siguientes lineas  -->
-          <!-- <option value="1">Informatica</option>
-          <option value="2">Biologia</option> -->
+        
         </select>
      
         <label for="numerosTelefonos">Telefono(s): </label>
@@ -70,7 +82,9 @@
         <!-- a continuacion no le vamos a  llamar telefono ya que cuando quiera intentar guardar o sacra los telefonos 
         me va a decir que no porq entonces es convertir un string en una lista de telefonos porq en la clase Estudiante
         tenemos una lista de Telefono llamada telefonos  -->
-        <input type="text" name="numerosTelefonos" id="numerosTelefonos" placeholder="Uno o varios, separados por punto y coma"> 
+        <input type="text" name="numerosTelefonos" id="numerosTelefonos" 
+                         placeholder="Uno o varios, separados por punto y coma"
+                         th:value="${telefonos}"> 
         
         <!-- Lo siguiente es para envira el formulario  -->
         <!--Para clikear el boton llamado submit y para campiar la caption o nombre del boton lo hacemos via value dnd le decimos que se llame Enviar en vez de submit-->

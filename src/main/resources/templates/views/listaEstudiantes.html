@@ -49,10 +49,20 @@
     como le he pasado ahora facultad.nombre pues solo aparecera el nombre de la facultad a cual pertenece el estudiante, 
     y no ponemos el id de facultad a cual pertenece el estudiante porq un estudiante solo puede pertenecer a una sola facultad  -->
 
+    <td>
+        <!-- cada registro o cada estudiante tiene su propio id asi que tengo que pasar su id (con el $+id)para cuando le doy 
+            a actualizar/borrar/detalles sabrá a que estudiante le hare eso  -->
+        <!-- en la siguiente 3 lineas ponemos una / despues del nombre por ejemplo frmActualizar/ porq  le estamos
+        pasando un campo por ejemplo id del estudiante-->
+        <a th:href="@{/fmrActualizar/}+${estudiante.id}">Actualizar</a> 
+        <a th:href="@{/borrar/}+${estudiante.id}">Borrar</a>
+        <a th:href="@{/detalles/}+${estudiante.id}">Detalles</a>
+    </td>
             </tr>
         </tbody>
     </table>
     <div>
+        <!--  aqui no ponemos una barra despues de frmAltaEst porq no le estamos pasando nada  -->
         <a th:href="@{/frmAltaEst}">Formulario de Alta Estudiante</a>
     </div>
 </body>
