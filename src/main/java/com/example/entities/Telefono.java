@@ -31,13 +31,11 @@ public class Telefono implements Serializable{
     // las tablas tienen que tener id y para que ese id de dichas tablas sea autoincremental y Foreign key hacemos lo siguiente
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-  
-
     private int id;
     private String numero;
     
 
-    @ManyToOne(fetch=FetchType.EAGER,cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch=FetchType.LAZY,cascade = CascadeType.REFRESH)
     @JoinColumn (name = "idEstudiante")
 
     private Estudiante estudiante; 

@@ -79,7 +79,7 @@ public class MainController { //El MainController responde a todas las peticione
      List<Facultad> facultades = facultadService.findAll();
      Estudiante estudiante = new Estudiante();
 
-        model.addAttribute("estudiante", new Estudiante());
+        model.addAttribute("estudiante",estudiante);
         model.addAttribute("facultades", facultades);
 
         return "views/formularioAltaEstudiante";
@@ -106,6 +106,18 @@ public class MainController { //El MainController responde a todas las peticione
 //hacer esta comprobación previa
 
             LOG.info("Telefonos recibidos: " + telefonosRecibidos);
+ 
+             //Lo siguiente te lo guarda
+            //Primero se guarda el estudiante para poder acceder a él y poder meterles los telefonos
+            estudianteService.save(estudiante); //guarada el estudiante en la bbdd estudiante
+             
+            //if(estudiante.getId()!=0){
+//Si el id del estudiante es distinto de 0 es porq ya existe es decir si es !=0 es porq ahora voy a actualizar
+//porq yo en el formulario cuando creo o relleno los datos de un estudiante luego a este se le asigna un id, este estudiante 
+//antes no tenia id hasta que yo haya rellenado sus datos
+// entonces 
+            //     estudianteService.deleteById(estudiante.getId());
+            // }
 
             List<String> listadoNumerosTelefonos = null;
 
@@ -122,14 +134,13 @@ public class MainController { //El MainController responde a todas las peticione
             listadoNumerosTelefonos = Arrays.asList(arrayTelefonos);
             }
 
-            //Lo siguiente te lo guarda
-            //Primero se guarda el estudiante para poder acceder a él y poder meterles los telefonos
-             estudianteService.save(estudiante); //guarada el estudiante en la bbdd estudiante
+            
 
              //Si sí hay telefonos, convertimos la coleccion en un flujo de telefonos, recorremos el flujo e introducimos los telefonos
              // n es el numero de telefono que pasa por la tuberia, le podemos llamar n o lo que queramos y quieres que esta n
              // se guarde en la variable numero por eso ponemos numero(n)
              if(listadoNumerosTelefonos!= null) {
+                telefonoService.deleteByEstudiante(estudiante);
                 listadoNumerosTelefonos.stream().forEach(n->{
                      Telefono telefonoObject = Telefono.builder().numero(n).estudiante(estudiante).build();
 
@@ -139,7 +150,7 @@ public class MainController { //El MainController responde a todas las peticione
              }
              //Lo siguiente te lo muestra
             return "redirect:/listar"; // es a la url a cual nos llevara despues de haber rellenado el formulario del estudiante 
-           
+           //lo anterior me redirecta a la url o pagina listar 
         }
      
 
@@ -174,10 +185,19 @@ public class MainController { //El MainController responde a todas las peticione
         List<Facultad> facultades =facultadService.findAll();
 
         model.addAttribute("estudiante", estudiante);
-        model.addAttribute("telefonos", telefonosDelEstudiante);
+        model.addAttribute("telefonos", numerosDeTelefono);
         model.addAttribute("facultades", facultades);
 
         return "views/formularioAltaEstudiante";
 
        }
-    }
+
+       @GetMapping("/borrar/{id}")
+       public String borrarEstudiante(@PathVariable(name="id") int idEstudiante){
+
+         estudianteService.delete(estudianteService.findById(idEstudiante));
+         
+         return "redirect:/listar";
+
+       }
+      }

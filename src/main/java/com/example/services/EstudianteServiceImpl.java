@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.dao.EstudianteDao;
 import com.example.entities.Estudiante;
@@ -32,14 +33,23 @@ public class EstudianteServiceImpl implements  EstudianteService{ //Es una clase
     }
 
     @Override
+    @Transactional
     public void save(Estudiante estudiante) {
         //return estudianteDao.save(estudiante); como es un metodo void no ponemos el return 
         estudianteDao.save(estudiante);
     }
 
     @Override
+    @Transactional
     public void deleteById(int idEstudiante) {
         estudianteDao.deleteById(idEstudiante);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Estudiante estudiante) {
+        estudianteDao.delete(estudiante);
+        
     } 
     
 }
