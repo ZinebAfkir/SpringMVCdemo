@@ -27,6 +27,11 @@ public class TelefonoServiceImpl implements TelefonoService {
         return telefonoDao.findById(idTelefono).get();
     }
 
+    @Override
+    public List<Telefono> findByEstudiante(Estudiante estudiante) {
+       return telefonoDao.findByEstudiante(estudiante);
+    
+    }
     //Los metodos save/delete tienen que llevar el @Transactional
     @Override
     @Transactional
@@ -46,6 +51,8 @@ public class TelefonoServiceImpl implements TelefonoService {
         telefonoDao.deleteByEstudiante(estudiante);
        
     }
+
+    
     
     
     

@@ -200,4 +200,19 @@ public class MainController { //El MainController responde a todas las peticione
          return "redirect:/listar";
 
        }
+
+       /**
+     * Métodoque encuentre los telefonso de cada estudiante: (hecho por nosotras):
+     */
+    @GetMapping("/detalles/{id}")
+    public String detallesEstudiante(@PathVariable(name = "id") int id, Model model) {
+
+        Estudiante estudiante = estudianteService.findById(id);
+        List<Telefono> telefonos = telefonoService.findByEstudiante(estudiante);
+        List<String> numerosTelefono = telefonos.stream().map(t -> t.getNumero()).toList();
+
+        model.addAttribute("telefonos", numerosTelefono);
+        model.addAttribute("estudiante", estudiante);
+        return "views/detalleEstudiante";
+    }
       }
