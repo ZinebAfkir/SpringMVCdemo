@@ -1,5 +1,8 @@
 package com.example.controllers;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -96,7 +100,8 @@ public class MainController { //El MainController responde a todas las peticione
 
          @PostMapping("/altaModificacionEstudiante") //post es para que lo que envie este dentro del protocolo es decir no lo puede ver todo el mundo
         public String altaEstudiante(@ModelAttribute Estudiante estudiante,
-                      @RequestParam(name ="numerosTelefonos") String telefonosRecibidos){
+                      @RequestParam(name ="numerosTelefonos") String telefonosRecibidos,
+                      @RequestParam(name="imagen") MultipartFile imagen){ 
 
 //"numerosTelefonos" es una request es decir es una peticion que hacemos,pedimos "numerosTelefonos" y lo que me da lo guardamos
 // en la variable String telefonosRecibidos
@@ -107,6 +112,38 @@ public class MainController { //El MainController responde a todas las peticione
 
             LOG.info("Telefonos recibidos: " + telefonosRecibidos);
  
+            //Si la imagen no viene vacia ya puedo trabajar entonces con ella 
+              if(!imagen.isEmpty()){
+               try {
+
+               //Ruta relativa dnd voy a almacenar el archivo de imagen
+               Path rutaRelativa = Paths.get("src/main/resources/static/images");// el path es un interfaz
+               
+               //Ruta absoluta es la concatenacion de la ruta relativa con el get... 
+               String rutaAbsoluta = rutaRelativa.toFile().getAbsolutePath();
+
+               //Almacenamos la imagen en un array de bytes 
+               byte[] imagenEnBytes = imagen.getBytes();
+
+               //Ruta completa 
+               Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + imagen.getOriginalFilename());
+
+               //Ahora tenemos que guardar la imagen en lel file system/rutaAbsoluta
+
+               Files.write(rutaCompleta, imagenEnBytes);
+
+               //Asociar la imagen con el objeto estudiante que se va a guardar 
+               estudiante.setFoto(imagen.getOriginalFilename());
+
+               } catch (Exception e) {
+                  // TODO: handle exception
+               }
+              }
+
+
+
+
+
              //Lo siguiente te lo guarda
             //Primero se guarda el estudiante para poder acceder a él y poder meterles los telefonos
             estudianteService.save(estudiante); //guarada el estudiante en la bbdd estudiante

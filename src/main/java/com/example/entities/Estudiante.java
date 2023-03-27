@@ -56,6 +56,8 @@ public class Estudiante implements Serializable { //Serializable convierte un ob
     private Genero genero;
     private double beca;
    
+    private String foto; //como tenemos el lombok ya se habra creado los metodos get y set foto
+    
     //Es mejor usar lazy para tener solo conexion cuando haya consulta entre tablas y no una conexion activa permanente entre ellas
     // tal como hacia eager
     @ManyToOne(fetch=FetchType.LAZY,cascade = CascadeType.PERSIST)//muchos a uno, es decir muchos estudiantes pertenecen a una facultad

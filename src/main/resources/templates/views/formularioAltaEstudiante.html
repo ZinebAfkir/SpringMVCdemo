@@ -9,8 +9,11 @@
 <body>
     <h1>Formulario de Alta de Estudiante</h1>
 
-
-    <form th:Object="${estudiante}" th:action="@{/altaModificacionEstudiante}" method="post">  <!--@ es lo que va a recibir la url --> 
+ <!-- Añadimos la opcion enctype en el siguiente form para lo de las imagenes  -->
+    <form th:Object="${estudiante}" 
+            th:action="@{/altaModificacionEstudiante}" 
+                  method="post"
+                      enctype="multipart/form-data">  <!--@ es lo que va a recibir la url --> 
 
         <!-- Guaradar en un input oculto el id del estudiante , el id es para cuando queramos actualizar o borrar-->
         <input type="hidden" name="id" th:value="${estudiante.id}">
@@ -86,11 +89,17 @@
                          placeholder="Uno o varios, separados por punto y coma"
                          th:value="${telefonos}"> 
         
-        <!-- Lo siguiente es para envira el formulario  -->
+
+         <!-- Lo  nuevo para me permite adjuntar o subir alguna foto -->
+         <label for ="imagen">Foto: </label> 
+         <input type="file" id="imagen" name="imagen">
+
+         
+        <!-- Lo siguiente es para enviar el formulario  -->
         <!--Para clikear el boton llamado submit y para campiar la caption o nombre del boton lo hacemos via value dnd le decimos que se llame Enviar en vez de submit-->
         <input type="submit" value="Enviar">    
     </form>
-   
+    
 
 
 

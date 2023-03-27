@@ -11,9 +11,13 @@
     <h1 th:if="${estudiante != null}"
         th:text="'Detalles del estudiante ' + ${estudiante.nombre} + ' ' + ${estudiante.primerApellido}"></h1>
 
-    <div th:if="${telefonos != null}">
+        <!-- Para mostrar una imagen en los detalles de la pagina html -->
+    <img alt="Imagen de un perro" th:src="@{/images/}+${estudiante.foto}">
 
-        <p>Telefonos:</p>
+
+    <div>
+
+        Telefonos
 
         <ul>
 
